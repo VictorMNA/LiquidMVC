@@ -23,13 +23,72 @@
     //#include <stdarg.h>
 	#include <LiquidMenu.h>
 
-    class MenuOption{
-    	
+	class MenuOption{
+    	public:
+    		String _txt;
+    		virtual int optionMode(){  }
+    		/*MenuOption(  ){
+
+    		}*/
+
+    		/*void add_option(option_evt _option){
+
+    		}
+
+    		void add_option(option_value _option){
+
+    		}
+
+    		void add_option(option_link _option){
+
+    		}*/
+
+	    	/*void listmenu(int numargs, ...) {
+				va_list ap;
+
+				va_start(ap, numargs);
+				while (numargs--){
+					int total;
+					total += va_arg(ap, int);
+				}
+				va_end(ap);
+			}*/
     };
 
-	class LiquidMVC : public LiquidSystem  {
+	class option_evt : public MenuOption {
+		public:
+		
+		void (*_f)(void);
+
+		option_evt(String txt, void (*func)() = NULL){
+			_txt = txt;
+			_f = func;
+		}
+
+	};
+
+	class option_link : public MenuOption {
 		public:
 
+		option_link(String txt ){
+			_txt = txt;
+		}
+	};
+
+    class option_value : public MenuOption {
+		public:
+			int *_value;
+
+			option_value(String txt, int *value ){
+				_txt = txt;
+				_value = value;
+			}
+	};
+
+	class LiquidMVC  {
+		public:
+			LiquidSystem _sys;
+			MenuOption _menusystem[];
 
 		#ifdef ENCODERMENU_H
 			EncoderMenu *_controller;
@@ -55,7 +114,7 @@
 		#endif
 
 		#ifdef KEYPADMENU_H
-			KeypadMenu _controller;
+			KeypadMenu *_controller;
 
 			#ifdef LiquidCrystal_I2C_h
 				LiquidMVC( LiquidCrystal_I2C *lcd, KeypadMenu *controller ){
@@ -100,16 +159,23 @@
 			_lcd->backlight();
 
 		};
+		
+		void add_option( MenuOption _option){
+			//Serial.println( typeof( _option ) );
+			//Serial.println( typeid(_option).name() );
+			/*option_value *a;
+			option_link *b;
+			option_evt *c;*/
+			Serial.println( _option.optionMode() );
 
-		void listmenu(int numargs, ...) {
-			va_list ap;
+			if( _option.optionMode() == 0){
 
-			va_start(ap, numargs);
-			while (numargs--){
-				int total;
-				total += va_arg(ap, int);
 			}
-			va_end(ap);
-		}
+			/*if( a = dynamic_cast< option_value* >( &_option )  ){
+
+			}*/
+
+    	}
+		
   };
 #endif
