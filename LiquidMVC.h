@@ -23,67 +23,7 @@
     //#include <stdarg.h>
 	#include <LiquidMenu.h>
 
-	class MenuOption{
-    	public:
-    		String _txt;
-    		virtual int optionMode(){  }
-    		/*MenuOption(  ){
-
-    		}*/
-
-    		/*void add_option(option_evt _option){
-
-    		}
-
-    		void add_option(option_value _option){
-
-    		}
-
-    		void add_option(option_link _option){
-
-    		}*/
-
-	    	/*void listmenu(int numargs, ...) {
-				va_list ap;
-
-				va_start(ap, numargs);
-				while (numargs--){
-					int total;
-					total += va_arg(ap, int);
-				}
-				va_end(ap);
-			}*/
-    };
-
-	class option_evt : public MenuOption {
-		public:
-		
-		void (*_f)(void);
-
-		option_evt(String txt, void (*func)() = NULL){
-			_txt = txt;
-			_f = func;
-		}
-
-	};
-
-	class option_link : public MenuOption {
-		public:
-
-		option_link(String txt ){
-			_txt = txt;
-		}
-	};
-
-    class option_value : public MenuOption {
-		public:
-			int *_value;
-
-			option_value(String txt, int *value ){
-				_txt = txt;
-				_value = value;
-			}
-	};
+  #include "MenuOption.h"
 
 	class LiquidMVC  {
 		public:
@@ -160,22 +100,8 @@
 
 		};
 		
-		void add_option( MenuOption _option){
-			//Serial.println( typeof( _option ) );
-			//Serial.println( typeid(_option).name() );
-			/*option_value *a;
-			option_link *b;
-			option_evt *c;*/
-			Serial.println( _option.optionMode() );
-
-			if( _option.optionMode() == 0){
-
-			}
-			/*if( a = dynamic_cast< option_value* >( &_option )  ){
-
-			}*/
-
-    	}
-		
+		void add_option( MenuOption option){
+			Serial.println( option.getTypeName() );
   };
 #endif
+
