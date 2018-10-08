@@ -51,7 +51,7 @@ void TestMenuOption()
       
       Serial.print(Puntero[index]->getTypeName() + " : " + Puntero[index]->getName());
       
-      if(Puntero[index]->getType() == MenuOption::MenuType::MENU_INT_VALUE)
+      if(Puntero[index]->getType() == MenuOption::Type::INT_VALUE)
       {
         Serial.println(" : " + String((static_cast<MenuOptionIntValue*>(Puntero[index]))->getValue()));
         (static_cast<MenuOptionIntValue*>(Puntero[index]))->NextValue();
@@ -64,7 +64,7 @@ void TestMenuOption()
         Serial.println();
       }
   
-      if(Puntero[index]->getType() == MenuOption::MenuType::MENU_ACTION)
+      if(Puntero[index]->getType() == MenuOption::Type::ACTION)
       {
         (static_cast<MenuOptionAction*>(Puntero[index]))->ExecuteCallback();
       }    
@@ -100,7 +100,7 @@ void TestArrayOptions()
     MenuOption &Element = *ArrayMenu[index];
     
     Serial.print(Element.getTypeName() + " : " + Element.getName());    
-    if(Element.getType() == MenuOption::MenuType::MENU_INT_VALUE)
+    if(Element.getType() == MenuOption::Type::INT_VALUE)
     {
       Serial.println(" : " + String((static_cast<MenuOptionIntValue&>(Element)).getValue()));
     }
@@ -110,7 +110,7 @@ void TestArrayOptions()
       Serial.println();
     }
 
-    if(Element.getType() == MenuOption::MenuType::MENU_ACTION)
+    if(Element.getType() == MenuOption::Type::ACTION)
     {
         (static_cast<MenuOptionAction&>(Element)).ExecuteCallback();
     }    

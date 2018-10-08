@@ -8,15 +8,15 @@ class MenuOption
 {
   public:
    
-    enum class MenuType
+    enum class Type
     {
-      MENU_NONE,
-      MENU_INT_VALUE,
-      MENU_ACTION,
-      MENU_SUBMENU
+      NONE,
+      INT_VALUE,
+      ACTION,
+      SUBMENU
     };
 
-    MenuOption(String name, MenuType type = MenuType::MENU_NONE):
+    MenuOption(String name, Type type = Type::NONE):
     _name(name),
     _type(type)
     {
@@ -27,7 +27,7 @@ class MenuOption
       return _name;
     }
 
-    MenuType getType(void)
+    Type getType(void)
     {
       return _type;
     }
@@ -36,19 +36,19 @@ class MenuOption
     {
       switch(_type)
       {
-        case MenuType::MENU_INT_VALUE:
+        case Type::INT_VALUE:
           return "Int value type";
           break;
                 
-        case MenuType::MENU_ACTION:
+        case Type::ACTION:
           return "Action type";
           break;
                 
-        case MenuType::MENU_SUBMENU:
+        case Type::SUBMENU:
           return "Submenu type";
           break;
           
-        case MenuType::MENU_NONE:
+        case Type::NONE:
         default:
           return "No type detected";
           break;      
@@ -57,14 +57,14 @@ class MenuOption
 
   private:
     String  _name;
-    MenuType _type;
+    Type _type;
 };
 
 class MenuOptionIntValue: public MenuOption
 {
   public:
     MenuOptionIntValue(String name, int* value):
-    MenuOption(name, MenuType::MENU_INT_VALUE)
+    MenuOption(name, Type::INT_VALUE)
     {
       _value = value;
     }
@@ -93,7 +93,7 @@ class MenuOptionAction: public MenuOption
 {
   public:
     MenuOptionAction(String name, CallbackFunction function):
-    MenuOption(name, MenuType::MENU_ACTION)
+    MenuOption(name, Type::ACTION)
     {
       _function = function;
     }
@@ -116,7 +116,7 @@ class MenuOptionSubmenu: public MenuOption
 {
   public:
     MenuOptionSubmenu(String name):
-    MenuOption(name, MenuType::MENU_SUBMENU)
+    MenuOption(name, Type::SUBMENU)
     {
     }  
 };
