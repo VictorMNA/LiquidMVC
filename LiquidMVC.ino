@@ -15,6 +15,14 @@ void setup() {
   Serial.println();
 
   TestMenuOption();
+  
+  Serial.println();
+  Serial.println();
+  Serial.println("Next test...");
+  Serial.println();
+  Serial.println();
+  
+  TestArrayOptions();
 }
 
 void loop() {

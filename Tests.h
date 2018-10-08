@@ -5,4 +5,6 @@
 
 void TestMenuOption(void);
 
+void TestArrayOptions(void);
+
 #endif
