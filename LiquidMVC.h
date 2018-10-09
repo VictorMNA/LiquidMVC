@@ -1,14 +1,14 @@
 /*
   Design and created by Blascarr
-  EncoderMe
-  Name    : Blascarr
-  Description: EncoderMenu.h
+  LiquidMVC
+  Author    : Blascarr
+  Description: LiquidMVC.h
   version : 1.0
  
     Blascarr invests time and resources providing this open source code like some other libraries, please
     respect the job and support open-source software.
     
-    Written by Adrian for Blascarr
+    Written by Adrian for Zaragoza Maker Space
 */
 
 #ifndef LIQUIDMVC_H
@@ -22,14 +22,31 @@
 
     //#include <stdarg.h>
 	#include <LiquidMenu.h>
-
+    typedef void (*CallbackFunction)(void);
 	class MenuOption{
     	public:
     		String _txt;
-    		virtual int optionMode(){  }
-    		/*MenuOption(  ){
 
-    		}*/
+    		enum class MenuType
+			{
+				MENU_NONE,
+				MENU_INT_VALUE,
+				MENU_CALLBACK,
+				MENU_LINK
+			};
+
+			virtual int optionMode(){  }
+    		MenuOption;
+
+    		MenuOption(String name, MenuType type = MenuType::MENU_NONE):
+				_name(name),
+				_type(type){
+
+    		}
+
+    		MenuType getType(void){
+				return _type;
+			}
 
     		/*void add_option(option_evt _option){
 
@@ -53,36 +70,50 @@
 				}
 				va_end(ap);
 			}*/
+		private:
+			String  _name;
+			MenuType _type;
     };
 
 	class option_evt : public MenuOption {
 		public:
-		
-		void (*_f)(void);
-
-		option_evt(String txt, void (*func)() = NULL){
-			_txt = txt;
-			_f = func;
-		}
-
+			option_evt(String name, CallbackFunction function) : MenuOption(name, MenuType::MENU_CALLBACK){
+				_callback = function;
+			}
+			void (*_f)(void);
+			int optionMode(){ return 1; }
+			void ExecuteCallback(void)
+			{
+				if(_callback != NULL){
+					_callback();
+				}
+			}
+			private:
+    			CallbackFunction _callback;
 	};
 
 	class option_link : public MenuOption {
 		public:
+			option_link(String name) : MenuOption(name, MenuType::MENU_LINK){
+			
+			}  
+			int optionMode(){ return 2; }
 
-		option_link(String txt ){
-			_txt = txt;
-		}
 	};
 
     class option_value : public MenuOption {
 		public:
-			int *_value;
 
-			option_value(String txt, int *value ){
-				_txt = txt;
+			option_value(String name, int* value) : MenuOption(name, MenuType::MENU_INT_VALUE){
 				_value = value;
 			}
+			int optionMode(){ return 3; }
+			int getValue(void){
+				return *_value;
+			}
+
+		private:
+			int* _value;
 	};
 
 	class LiquidMVC  {
@@ -90,92 +121,93 @@
 			LiquidSystem _sys;
 			MenuOption _menusystem[];
 
-		#ifdef ENCODERMENU_H
-			EncoderMenu *_controller;
+			#ifdef ENCODERMENU_H
+				EncoderMenu *_controller;
 
-			#ifdef LiquidCrystal_I2C_h
-				LiquidMVC( LiquidCrystal_I2C *lcd, EncoderMenu *controller ){
-					_lcd = lcd;
+				#ifdef LiquidCrystal_I2C_h
+					LiquidMVC( LiquidCrystal_I2C *lcd, EncoderMenu *controller ){
+						_lcd = lcd;
+						_controller = controller;
+					};
+				#endif
+
+				#ifdef LiquidCrystal_h
+					LiquidMVC( LiquidCrystal *lcd, EncoderMenu *controller ){
+						_lcd = lcd;
+						_controller = controller;
+					};
+				#endif
+
+				LiquidMVC( EncoderMenu *controller ){
 					_controller = controller;
 				};
+
+			#endif
+
+			#ifdef KEYPADMENU_H
+				KeypadMenu *_controller;
+
+				#ifdef LiquidCrystal_I2C_h
+					LiquidMVC( LiquidCrystal_I2C *lcd, KeypadMenu *controller ){
+						_lcd = lcd;
+						_controller = controller;
+					};
+				#endif
+
+				#ifdef LiquidCrystal_h
+					LiquidMVC( LiquidCrystal *lcd, KeypadMenu *controller ){
+						_lcd = lcd;
+						_controller = controller;
+					};
+				#endif
+
+				LiquidMVC( KeypadMenu *controller ){
+					_controller = controller;
+				};
+
+			#endif
+
+			#ifdef LiquidCrystal_I2C_h
+				LiquidCrystal_I2C *_lcd;
+
+				LiquidMVC( LiquidCrystal_I2C *lcd){
+					_lcd = lcd;
+				};
+
 			#endif
 
 			#ifdef LiquidCrystal_h
-				LiquidMVC( LiquidCrystal *lcd, EncoderMenu *controller ){
+				LiquidCrystal *_lcd;
+
+				LiquidMVC( LiquidCrystal lcd ){
 					_lcd = lcd;
-					_controller = controller;
 				};
+
 			#endif
 
-			LiquidMVC( EncoderMenu *controller ){
-				_controller = controller;
+			void init(){
+				_lcd->init(); 
+				_lcd->backlight();
+
 			};
+			
+			void add_option( MenuOption& _option){
+				
+				//Serial.println( _option.optionMode() );
 
-		#endif
+				if( _option.getType() == MenuOption::MenuType::MENU_INT_VALUE){
+					//Serial.println( "OPTION__VALUE" );
+				}
 
-		#ifdef KEYPADMENU_H
-			KeypadMenu *_controller;
+				if( _option.getType() == MenuOption::MenuType::MENU_CALLBACK){
+					//Serial.println( "OPTION__LINK" );
+				}
 
-			#ifdef LiquidCrystal_I2C_h
-				LiquidMVC( LiquidCrystal_I2C *lcd, KeypadMenu *controller ){
-					_lcd = lcd;
-					_controller = controller;
-				};
-			#endif
-
-			#ifdef LiquidCrystal_h
-				LiquidMVC( LiquidCrystal *lcd, KeypadMenu *controller ){
-					_lcd = lcd;
-					_controller = controller;
-				};
-			#endif
-
-			LiquidMVC( KeypadMenu *controller ){
-				_controller = controller;
-			};
-
-		#endif
-
-		#ifdef LiquidCrystal_I2C_h
-			LiquidCrystal_I2C *_lcd;
-
-			LiquidMVC( LiquidCrystal_I2C *lcd){
-				_lcd = lcd;
-			};
-
-		#endif
-
-		#ifdef LiquidCrystal_h
-			LiquidCrystal *_lcd;
-
-			LiquidMVC( LiquidCrystal lcd ){
-				_lcd = lcd;
-			};
-
-		#endif
-
-		void init(){
-			_lcd->init(); 
-			_lcd->backlight();
-
-		};
-		
-		void add_option( MenuOption _option){
-			//Serial.println( typeof( _option ) );
-			//Serial.println( typeid(_option).name() );
-			/*option_value *a;
-			option_link *b;
-			option_evt *c;*/
-			Serial.println( _option.optionMode() );
-
-			if( _option.optionMode() == 0){
+				if( _option.getType() == MenuOption::MenuType::MENU_LINK){
+					//Serial.println( "OPTION_LINK" );
+				}
 
 			}
-			/*if( a = dynamic_cast< option_value* >( &_option )  ){
-
-			}*/
-
-    	}
 		
   };
 #endif
