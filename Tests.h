@@ -7,4 +7,8 @@ void TestMenuOption(void);
 
 void TestArrayOptions(void);
 
+void TestMenuRendererLcd(void);
+
+void TestMenuControllerEncoder(void);
+
 #endif

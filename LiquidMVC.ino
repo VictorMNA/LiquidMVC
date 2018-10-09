@@ -12,21 +12,33 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Program started...");
   Serial.println();
-  Serial.println();
 
   TestMenuOption();
   
-  Serial.println();
-  Serial.println();
-  Serial.println("Next test...");
-  Serial.println();
-  Serial.println();
+  PrintNextTest();
   
   TestArrayOptions();
+
+  PrintNextTest();
+  
+  TestMenuRendererLcd();
+
+  PrintNextTest();
+  
+  TestMenuControllerEncoder();  
+
+  
 }
 
 void loop() {
 
 
+}
+
+void PrintNextTest(void)
+{
+  Serial.println();
+  Serial.println("Next test...");
+  Serial.println();  
 }
 

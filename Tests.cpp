@@ -119,4 +119,45 @@ void TestArrayOptions()
   Serial.println("ArrayOptions test end <<<");
 }
 
+//=============================================================
+// tests for MenuRenderer
+
+#include "MenuRendererLcd.h"
+
+MenuRendererLcd RendererLcd;
+
+MenuRenderer *Renderer;
+
+void TestMenuRendererLcd()
+{
+  Serial.println(">>> MenuRendererLcd test start");
+
+  Renderer = &RendererLcd;
+
+  Renderer->Init();
+  Renderer->Render();
+
+  Serial.println("MenuRendererLcd test end <<<");
+}
+
+//=============================================================
+// tests for MenuController
+
+#include "MenuControllerEncoder.h"
+
+MenuControllerEncoder ControllerEncoder;
+
+MenuController *Controller;
+
+void TestMenuControllerEncoder()
+{
+  Serial.println(">>> MenuControllerEncoder test start");
+
+  Controller = &ControllerEncoder;
+
+  Controller->Init();
+  Controller->Read();
+
+  Serial.println("MenuControllerEncoder test end <<<");
+}
 
