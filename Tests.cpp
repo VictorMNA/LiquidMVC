@@ -7,7 +7,7 @@
 #endif
 
 
-#include "MenuOption.h"
+#include "LiquidMVC.h"
 
 #include "Tests.h"
 
@@ -159,5 +159,19 @@ void TestMenuControllerEncoder()
   Controller->Read();
 
   Serial.println("MenuControllerEncoder test end <<<");
+}
+
+//=============================================================
+// tests for LiquidMVC
+
+LiquidMVC MyMenu(&RendererLcd, &ControllerEncoder);
+
+void TestLiquidMVCInit()
+{
+  Serial.println(">>> TestLiquidMVCInit test start");
+
+  MyMenu.Init();
+
+  Serial.println("TestLiquidMVCInit test end <<<");
 }
 

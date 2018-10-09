@@ -11,4 +11,6 @@ void TestMenuRendererLcd(void);
 
 void TestMenuControllerEncoder(void);
 
+void TestLiquidMVCInit(void);
+
 #endif

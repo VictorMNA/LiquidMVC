@@ -27,6 +27,9 @@ void setup() {
   
   TestMenuControllerEncoder();  
 
+  PrintNextTest();
+
+  TestLiquidMVCInit();
   
 }
 
