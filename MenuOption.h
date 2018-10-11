@@ -56,36 +56,36 @@ class MenuOption
     }
 
   private:
-    String  _name;
-    Type _type;
+    const String  _name;
+    const Type _type;
 };
 
 class MenuOptionIntValue: public MenuOption
 {
   public:
-    MenuOptionIntValue(String name, int* value):
-    MenuOption(name, Type::INT_VALUE)
+    MenuOptionIntValue(String name, int& value):
+    MenuOption(name, Type::INT_VALUE),
+    _value(value)
     {
-      _value = value;
     }
 
     int getValue(void)
     {
-      return *_value;
+      return _value;
     }
 
     void NextValue(void)
     {
-      (*_value)++;
+      _value++;
     }
 
     void PrevValue(void)
     {
-      (*_value)--;
+      _value--;
     }
 
     private:
-      int* _value;
+      int& _value;
 };
 
 typedef void (*CallbackFunction)(void);
@@ -93,9 +93,9 @@ class MenuOptionAction: public MenuOption
 {
   public:
     MenuOptionAction(String name, CallbackFunction function):
-    MenuOption(name, Type::ACTION)
+    MenuOption(name, Type::ACTION),
+    _function(function)
     {
-      _function = function;
     }
 
     void ExecuteCallback(void)

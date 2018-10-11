@@ -27,7 +27,7 @@ void Juan(void)
   Serial.println("Juan called!!!");
 }
 
-MenuOptionIntValue option1("Editable value", &EditableValue);
+MenuOptionIntValue option1("Editable value", EditableValue);
 MenuOptionAction   option2("Test button", Pepe);
 MenuOptionSubmenu  option3("Next menú");
 
@@ -77,7 +77,7 @@ void TestMenuOption()
 
 int Potatoes = 16;
 
-MenuOptionIntValue Elemento1("Potato chips", &Potatoes);
+MenuOptionIntValue Elemento1("Potato chips", Potatoes);
 MenuOptionSubmenu  Elemento2("Unused menu");
 MenuOptionAction   Elemento3("Juan", Juan);
 
