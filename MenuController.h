@@ -6,8 +6,17 @@
 class MenuController
 {
   public:
+
+    enum class Event
+    {
+      NONE,
+      SELECT,
+      PREV,
+      NEXT
+    };
+
     virtual void Init(void);
-    virtual void Read(void);
+    virtual MenuController::Event Read(void);
   
 };
 

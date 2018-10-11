@@ -145,7 +145,7 @@ void TestMenuRendererLcd()
 
 #include "MenuControllerEncoder.h"
 
-MenuControllerEncoder ControllerEncoder;
+MenuControllerEncoder ControllerEncoder(A0, A1, A2, false, true);
 
 MenuController *Controller;
 
@@ -156,7 +156,33 @@ void TestMenuControllerEncoder()
   Controller = &ControllerEncoder;
 
   Controller->Init();
-  Controller->Read();
+
+  Serial.println("Use encoder for a while...");
+  for(long int index = 0; index < 200000; index++)
+  {
+    switch(Controller->Read())
+    {
+      case MenuController::Event::SELECT:
+        Serial.println("Controller returns Select");
+        break;
+
+      case MenuController::Event::PREV:
+        Serial.println("Controller returns Prev");
+        break;
+
+      case MenuController::Event::NEXT:
+        Serial.println("Controller returns Next");
+        break;
+
+      case MenuController::Event::NONE:
+        //Serial.println("Controller returns NONE");
+        break;
+
+      default:
+        Serial.println("Controller returns ????");
+        break;
+    }
+  }
 
   Serial.println("MenuControllerEncoder test end <<<");
 }

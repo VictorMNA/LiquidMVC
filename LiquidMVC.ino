@@ -8,7 +8,6 @@
 #include "MenuOption.h"
 
 void setup() {
-  
   Serial.begin(115200);
   Serial.println("Program started...");
   Serial.println();
@@ -30,7 +29,10 @@ void setup() {
   PrintNextTest();
 
   TestLiquidMVCInit();
-  
+
+  Serial.println();
+  Serial.println("Tests ended.");
+  Serial.println();
 }
 
 void loop() {
