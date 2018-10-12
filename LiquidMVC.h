@@ -29,15 +29,15 @@
 
 class LiquidMVC  {
 	public:
-    LiquidMVC(MenuRenderer *renderer, MenuController *controller):
+    LiquidMVC(MenuRenderer& renderer, MenuController& controller):
     _renderer(renderer),
     _controller(controller)
     {
     };
 
   	void Init(){
-      _renderer->Init();
-      _controller->Init();
+      _renderer.Init();
+      _controller.Init();
   	};
 	
 	void add_option( MenuOption option){
@@ -46,8 +46,8 @@ class LiquidMVC  {
 
   private:
     MenuOption _menusystem[];
-    MenuRenderer *_renderer;
-    MenuController *_controller;
+    MenuRenderer& _renderer;
+    MenuController& _controller;
     //LiquidSystem _sys;
 };
   

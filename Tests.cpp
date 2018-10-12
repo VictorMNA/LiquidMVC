@@ -190,7 +190,7 @@ void TestMenuControllerEncoder()
 //=============================================================
 // tests for LiquidMVC
 
-LiquidMVC MyMenu(&RendererLcd, &ControllerEncoder);
+LiquidMVC MyMenu(RendererLcd, ControllerEncoder);
 
 void TestLiquidMVCInit()
 {
