@@ -4,7 +4,9 @@
 #define MENUOPTION_H  
 
 #include <limits.h>
-  
+
+typedef void (*CallbackFunction)(void);
+
 class MenuOption
 {
   public:
@@ -68,7 +70,8 @@ class MenuOptionIntValue: public MenuOption
     MenuOption(name, Type::INT_VALUE),
     _value(value),
     _minValue(min),
-    _maxValue(max)
+    _maxValue(max),
+    _valueChanged(NULL)
     {
     }
 
@@ -82,6 +85,10 @@ class MenuOptionIntValue: public MenuOption
       if(_value < _maxValue)
       {
         _value++;
+        if(_valueChanged != NULL)
+        {
+          _valueChanged();
+        }
       }
     }
 
@@ -90,16 +97,25 @@ class MenuOptionIntValue: public MenuOption
       if(_value > _minValue)
       {
         _value--;
+        if(_valueChanged != NULL)
+        {
+          _valueChanged();
+        }
       }
+    }
+
+    void setValueChangedCallback(CallbackFunction function)
+    {
+      _valueChanged = function;
     }
 
     private:
       int& _value;
       int _minValue;
       int _maxValue;
+      CallbackFunction _valueChanged;
 };
 
-typedef void (*CallbackFunction)(void);
 class MenuOptionAction: public MenuOption
 {
   public:

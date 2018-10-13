@@ -218,3 +218,42 @@ void TestLiquidMVCInit()
   Serial.println("TestLiquidMVCInit test end <<<");
 }
 
+//=============================================================
+// tests for value changed callback
+#define BACKLIGHT_PIN 5
+int Backlight;
+MenuOptionIntValue Elemento4("BAcklight", Backlight, 0, 255);
+
+void ChangeBacklight(void)
+{
+  analogWrite(BACKLIGHT_PIN, Backlight);
+}
+
+void TestValueChangedCallback()
+{
+  Serial.println(">>> TestValueChangedCallback test start");
+  Serial.println("Look at the backlight!!!");
+
+  Backlight = 0;
+
+  ChangeBacklight();
+  Elemento4.setValueChangedCallback(ChangeBacklight);
+
+  for(int Times = 0; Times < 3; Times++)
+  {
+    for(int Index = 0; Index < 250; Index++)
+    {
+      Elemento4.NextValue();
+      delay(10);
+    }
+
+    for(int Index = 250; Index > 0; Index--)
+    {
+      Elemento4.PrevValue();
+      delay(10);
+    }
+  }
+
+  Serial.println("TestValueChangedCallback test end <<<");
+}
+

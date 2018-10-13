@@ -13,4 +13,6 @@ void TestMenuControllerEncoder(void);
 
 void TestLiquidMVCInit(void);
 
+void TestValueChangedCallback(void);
+
 #endif
