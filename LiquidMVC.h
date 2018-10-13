@@ -23,8 +23,14 @@ class LiquidMVC  {
     LiquidMVC(MenuRenderer& renderer, MenuController& controller);
     void Init(void);
 
+    void setMenuArray(MenuOption* array[], int size);
+
+    void ListMenu(void);
+
   private:
-    MenuOption _menusystem[];
+    MenuOption** _menuSystem;
+    int _sizeOfMenu;
+    int _optionSelected;
     MenuRenderer& _renderer;
     MenuController& _controller;
 };

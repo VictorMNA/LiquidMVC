@@ -212,6 +212,8 @@ void TestLiquidMVCInit()
   Serial.println(">>> TestLiquidMVCInit test start");
 
   MyMenu.Init();
+  MyMenu.setMenuArray(ArrayMenu, SizeOfMenu);
+  MyMenu.ListMenu();
 
   Serial.println("TestLiquidMVCInit test end <<<");
 }
