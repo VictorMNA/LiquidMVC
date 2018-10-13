@@ -14,41 +14,19 @@
 #ifndef LIQUIDMVC_H
 #define LIQUIDMVC_H 
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
-  //#include <stdarg.h>
-//#include <LiquidMenu.h>
-
 #include "MenuOption.h"
 #include "MenuController.h"
 #include "MenuRenderer.h"
 
 class LiquidMVC  {
 	public:
-    LiquidMVC(MenuRenderer& renderer, MenuController& controller):
-    _renderer(renderer),
-    _controller(controller)
-    {
-    };
-
-  	void Init(){
-      _renderer.Init();
-      _controller.Init();
-  	};
-	
-	void add_option( MenuOption option){
-		Serial.println( option.getTypeName() );
-	};
+    LiquidMVC(MenuRenderer& renderer, MenuController& controller);
+    void Init(void);
 
   private:
     MenuOption _menusystem[];
     MenuRenderer& _renderer;
     MenuController& _controller;
-    //LiquidSystem _sys;
 };
   
 #endif
