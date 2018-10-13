@@ -95,12 +95,21 @@ int Potatoes = 16;
 MenuOptionIntValue Elemento1("Potato chips", Potatoes);
 MenuOptionSubmenu  Elemento2("Unused menu");
 MenuOptionAction   Elemento3("Juan", Juan);
+#define BACKLIGHT_PIN 5
+int Backlight;
+MenuOptionIntValue Elemento4("Backlight", Backlight, 0, 255);
+
+void ChangeBacklight(void)
+{
+  analogWrite(BACKLIGHT_PIN, Backlight);
+}
 
 MenuOption *ArrayMenu[] =
 {
   &Elemento1,
   &Elemento2,
-  &Elemento3
+  &Elemento3,
+  &Elemento4
 };
 const int SizeOfMenu = sizeof(ArrayMenu) /sizeof(ArrayMenu[0]);
   
@@ -218,17 +227,17 @@ void TestLiquidMVCInit()
   Serial.println("TestLiquidMVCInit test end <<<");
 }
 
-//=============================================================
-// tests for value changed callback
-#define BACKLIGHT_PIN 5
-int Backlight;
-MenuOptionIntValue Elemento4("BAcklight", Backlight, 0, 255);
-
-void ChangeBacklight(void)
+void TestLiquidMVC()
 {
-  analogWrite(BACKLIGHT_PIN, Backlight);
+  Serial.println(">>> TestLiquidMVC test start");
+
+  MyMenu.ExecMenu();
+
+  Serial.println("TestLiquidMVC test end <<<");
 }
 
+//=============================================================
+// tests for value changed callback
 void TestValueChangedCallback()
 {
   Serial.println(">>> TestValueChangedCallback test start");

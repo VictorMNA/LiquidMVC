@@ -12,6 +12,7 @@ void TestMenuRendererLcd(void);
 void TestMenuControllerEncoder(void);
 
 void TestLiquidMVCInit(void);
+void TestLiquidMVC(void);
 
 void TestValueChangedCallback(void);
 

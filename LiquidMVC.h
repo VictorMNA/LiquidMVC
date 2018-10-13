@@ -27,12 +27,17 @@ class LiquidMVC  {
 
     void ListMenu(void);
 
+    void ExecMenu(void);
+
   private:
     MenuOption** _menuSystem;
     int _sizeOfMenu;
     int _optionSelected;
+    bool _editMode;
     MenuRenderer& _renderer;
     MenuController& _controller;
+
+    void ShowMenu(void);
 };
   
 #endif

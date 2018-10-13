@@ -34,6 +34,10 @@ void setup() {
 
   TestValueChangedCallback();
 
+  PrintNextTest();
+
+  TestLiquidMVC();
+
   Serial.println();
   Serial.println("Tests ended.");
   Serial.println();
