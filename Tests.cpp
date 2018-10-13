@@ -16,6 +16,7 @@
 // tests for MenuOption
 
 int EditableValue = 345;
+int EditableValue2 = 8;
 
 void Pepe(void)
 {
@@ -30,33 +31,32 @@ void Juan(void)
 MenuOptionIntValue option1("Editable value", EditableValue);
 MenuOptionAction   option2("Test button", Pepe);
 MenuOptionSubmenu  option3("Next menú");
+MenuOptionIntValue option4("Editable with limits", EditableValue2, 7, 10);
+#define SIZE_ARRAY 4
 
 void TestMenuOption()
 {
-  MenuOption *Puntero[3];
+  MenuOption *Puntero[SIZE_ARRAY];
   int index;
 
   Puntero[0] = &option1;
   Puntero[1] = &option2;
   Puntero[2] = &option3;
+  Puntero[3] = &option4;
   
   Serial.println(">>> MenuOption test start");
 
-  for(int times = 0; times < 3; times++)
+  for(int times = 0; times < 5; times++)
   {
     Serial.println("----------");
-    for(index = 0; index < 3; index++)
+    for(index = 0; index < SIZE_ARRAY; index++)
     {
-      Serial.println("-----");
-      
       Serial.print(Puntero[index]->getTypeName() + " : " + Puntero[index]->getName());
       
       if(Puntero[index]->getType() == MenuOption::Type::INT_VALUE)
       {
         Serial.println(" : " + String((static_cast<MenuOptionIntValue*>(Puntero[index]))->getValue()));
         (static_cast<MenuOptionIntValue*>(Puntero[index]))->NextValue();
-        (static_cast<MenuOptionIntValue*>(Puntero[index]))->NextValue();
-        (static_cast<MenuOptionIntValue*>(Puntero[index]))->PrevValue();
       }
           
       else
@@ -68,6 +68,21 @@ void TestMenuOption()
       {
         (static_cast<MenuOptionAction*>(Puntero[index]))->ExecuteCallback();
       }    
+    }
+  }
+
+  Serial.println("------------------------------");
+
+  for(int times = 0; times < 5; times++)
+  {
+    Serial.println("----------");
+    for(index = 0; index < SIZE_ARRAY; index++)
+    {
+      if(Puntero[index]->getType() == MenuOption::Type::INT_VALUE)
+      {
+        Serial.println(Puntero[index]->getTypeName() + " : " + Puntero[index]->getName() + " : " + String((static_cast<MenuOptionIntValue*>(Puntero[index]))->getValue()));
+        (static_cast<MenuOptionIntValue*>(Puntero[index]))->PrevValue();
+      }
     }
   }
 

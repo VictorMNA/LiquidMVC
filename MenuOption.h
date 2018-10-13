@@ -3,6 +3,7 @@
 #ifndef MENUOPTION_H
 #define MENUOPTION_H  
 
+#include <limits.h>
   
 class MenuOption
 {
@@ -63,9 +64,11 @@ class MenuOption
 class MenuOptionIntValue: public MenuOption
 {
   public:
-    MenuOptionIntValue(String name, int& value):
+    MenuOptionIntValue(String name, int& value, int min = INT_MIN, int max = INT_MAX):
     MenuOption(name, Type::INT_VALUE),
-    _value(value)
+    _value(value),
+    _minValue(min),
+    _maxValue(max)
     {
     }
 
@@ -76,16 +79,24 @@ class MenuOptionIntValue: public MenuOption
 
     void NextValue(void)
     {
-      _value++;
+      if(_value < _maxValue)
+      {
+        _value++;
+      }
     }
 
     void PrevValue(void)
     {
-      _value--;
+      if(_value > _minValue)
+      {
+        _value--;
+      }
     }
 
     private:
       int& _value;
+      int _minValue;
+      int _maxValue;
 };
 
 typedef void (*CallbackFunction)(void);
