@@ -159,7 +159,7 @@ void TestMenuRendererLcd()
   Renderer = &RendererLcd;
 
   Renderer->Init();
-  Renderer->Render();
+  Renderer->Render(ArrayMenu, SizeOfMenu, 2, false);
 
   Serial.println("MenuRendererLcd test end <<<");
 }
@@ -214,7 +214,11 @@ void TestMenuControllerEncoder()
 //=============================================================
 // tests for LiquidMVC
 
-LiquidMVC MyMenu(RendererLcd, ControllerEncoder);
+#include "MenuRendererSerial.h"
+
+MenuRendererSerial RendererSerial;
+
+LiquidMVC MyMenu(RendererSerial, ControllerEncoder);
 
 void TestLiquidMVCInit()
 {

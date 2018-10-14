@@ -7,7 +7,7 @@ class MenuRenderer
 {
   public:
     virtual void Init(void);
-    virtual void Render(void);  
+    virtual void Render(MenuOption *array[], const int& size, const int& selected, const bool& editing);
 };
 
 #endif

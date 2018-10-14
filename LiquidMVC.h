@@ -37,7 +37,7 @@ class LiquidMVC  {
     MenuRenderer& _renderer;
     MenuController& _controller;
 
-    void ShowMenu(void);
+    void Render(void);
 };
   
 #endif
