@@ -39,6 +39,7 @@ void MenuRendererSerial::Render(MenuOption *array[], const int& size, const int&
   Serial.println("\fMenu:");
 
   PrintSelectableElement("Back", (selected == -1));
+  Serial.println();
 
   for(int Index = 0; Index < size; Index++)
   {
