@@ -14,24 +14,30 @@
 #ifndef LIQUIDMVC_H
 #define LIQUIDMVC_H 
 
+#include <Vector.h>
+
 #include "MenuOption.h"
 #include "MenuController.h"
 #include "MenuRenderer.h"
+
+
 
 class LiquidMVC  {
 	public:
     LiquidMVC(MenuRenderer& renderer, MenuController& controller);
     void Init(void);
 
-    void setMenuArray(MenuOption* array[], int size);
+    template <size_t MENU_MAX_SIZE>
+    void setMenuArray(MenuOption *(&array)[MENU_MAX_SIZE], int size = 0)
+    {
+       _menuSystem.setStorage(array, size);
+    }
 
     void ListMenu(void);
-
     void ExecMenu(void);
 
   private:
-    MenuOption** _menuSystem;
-    int _sizeOfMenu;
+    Vector<MenuOption*> _menuSystem;
     int _optionSelected;
     bool _editMode;
     MenuRenderer& _renderer;

@@ -34,14 +34,14 @@ void MenuRendererSerial::PrintSelectableElement(String text, bool selected)
 }
 
 
-void MenuRendererSerial::Render(MenuOption *array[], const int& size, const int& selected, const bool& editing)
+void MenuRendererSerial::Render(Vector<MenuOption*>& array, const int& selected, const bool& editing)
 {
   Serial.println("\fMenu:");
 
   PrintSelectableElement("Back", (selected == -1));
   Serial.println();
 
-  for(int Index = 0; Index < size; Index++)
+  for(int Index = 0; Index < array.size(); Index++)
   {
     PrintSelectableElement(array[Index]->getName(), ((Index == selected) && !editing));
 

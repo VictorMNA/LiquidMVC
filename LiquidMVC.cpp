@@ -13,8 +13,6 @@
 LiquidMVC::LiquidMVC(MenuRenderer& renderer, MenuController& controller):
 _renderer(renderer),
 _controller(controller),
-_menuSystem(NULL),
-_sizeOfMenu(0),
 _optionSelected(0)
 {
 };
@@ -25,18 +23,12 @@ void LiquidMVC::Init()
   _controller.Init();
 };
 
-void LiquidMVC::setMenuArray(MenuOption* array[], int size)
-{
-  _menuSystem = array;
-  _sizeOfMenu = size;
-}
-
 
 void LiquidMVC::ListMenu()
 {
   Serial.println("- Start menu list");
 
-  for(int Index = 0; Index < _sizeOfMenu; Index++)
+  for(int Index = 0; Index < _menuSystem.size(); Index++)
   {
     Serial.print(String(Index + 1) + ": " + _menuSystem[Index]->getTypeName() + " : " + _menuSystem[Index]->getName());
 
@@ -56,7 +48,7 @@ void LiquidMVC::ListMenu()
 
 void LiquidMVC::Render()
 {
-  _renderer.Render(_menuSystem, _sizeOfMenu, _optionSelected, _editMode);
+  _renderer.Render(_menuSystem, _optionSelected, _editMode);
 }
 void LiquidMVC::ExecMenu()
 {
@@ -64,6 +56,7 @@ void LiquidMVC::ExecMenu()
 
   _editMode = false;
   _optionSelected = 0;
+
   Render();
 
   while(MenuRunning)
@@ -112,7 +105,7 @@ void LiquidMVC::ExecMenu()
         }
         else
         {
-          if(_optionSelected < (_sizeOfMenu - 1))
+          if(_optionSelected < (((int)_menuSystem.size()) - 1))
           {
             _optionSelected++;
           }

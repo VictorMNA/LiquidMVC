@@ -157,9 +157,10 @@ void TestMenuRendererLcd()
   Serial.println(">>> MenuRendererLcd test start");
 
   Renderer = &RendererLcd;
+  Vector<MenuOption*> MenuElements(ArrayMenu, SizeOfMenu);
 
   Renderer->Init();
-  Renderer->Render(ArrayMenu, SizeOfMenu, 2, false);
+  Renderer->Render(MenuElements, 2, false);
 
   Serial.println("MenuRendererLcd test end <<<");
 }
@@ -225,7 +226,7 @@ void TestLiquidMVCInit()
   Serial.println(">>> TestLiquidMVCInit test start");
 
   MyMenu.Init();
-  MyMenu.setMenuArray(ArrayMenu, SizeOfMenu);
+  MyMenu.setMenuArray(ArrayMenu, 4);
   MyMenu.ListMenu();
 
   Serial.println("TestLiquidMVCInit test end <<<");
@@ -235,6 +236,8 @@ void TestLiquidMVC()
 {
   Serial.println(">>> TestLiquidMVC test start");
 
+  MyMenu.Init();
+  MyMenu.setMenuArray(ArrayMenu, 4);
   MyMenu.ExecMenu();
 
   Serial.println("TestLiquidMVC test end <<<");
