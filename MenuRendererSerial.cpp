@@ -34,7 +34,7 @@ void MenuRendererSerial::PrintSelectableElement(String text, bool selected)
 }
 
 
-void MenuRendererSerial::Render(Vector<MenuOption*>& array, const int& selected, const bool& editing)
+void MenuRendererSerial::Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing)
 {
   Serial.println("\fMenu:");
 

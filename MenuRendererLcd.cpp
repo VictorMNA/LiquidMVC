@@ -19,7 +19,7 @@ void MenuRendererLcd::Init()
 }
 
 
-void MenuRendererLcd::Render(Vector<MenuOption*>& array, const int& selected, const bool& editing)
+void MenuRendererLcd::Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing)
 {
   Serial.println("MenuRendererLcd: Render called");
 }    

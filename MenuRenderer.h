@@ -9,7 +9,7 @@ class MenuRenderer
 {
   public:
     virtual void Init(void);
-    virtual void Render(Vector<MenuOption*>& array, const int& selected, const bool& editing);
+    virtual void Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing);
 };
 
 #endif
