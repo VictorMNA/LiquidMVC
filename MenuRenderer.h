@@ -5,6 +5,8 @@
 
 #include <Vector.h>
 
+#include "LiquidMVC_config.h"
+
 class MenuRenderer
 {
   public:

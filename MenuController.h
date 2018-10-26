@@ -3,6 +3,8 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
 
+#include "LiquidMVC_config.h"
+
 class MenuController
 {
   public:
