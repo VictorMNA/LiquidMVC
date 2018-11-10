@@ -5,6 +5,9 @@
 
 #include <limits.h>
 
+#include <Vector.h>
+
+
 typedef void (*CallbackFunction)(void);
 
 class MenuOption
@@ -142,10 +145,20 @@ class MenuOptionAction: public MenuOption
 class MenuOptionSubmenu: public MenuOption
 {
   public:
-    MenuOptionSubmenu(String name):
+    template <size_t MENU_MAX_SIZE>
+    MenuOptionSubmenu(String name, MenuOption *(&array)[MENU_MAX_SIZE], int size = 0):
     MenuOption(name, Type::SUBMENU)
     {
-    }  
+      _subMenu.setStorage(array, size);
+    }
+
+    const Vector<MenuOption*> getMenu(void)
+    {
+      return _subMenu;
+    }
+
+    private:
+      Vector<MenuOption*> _subMenu;
 };
 
 

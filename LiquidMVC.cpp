@@ -78,6 +78,10 @@ void LiquidMVC::NavigateMenu(const Vector<MenuOption*>& array)
         {
           _editMode = !_editMode;
         }
+        else if(array[OptionSelected]->getType() == MenuOption::Type::SUBMENU)
+        {
+          NavigateMenu((static_cast<MenuOptionSubmenu*>(array[OptionSelected]))->getMenu());
+        }
         _renderer.Render(array, OptionSelected, _editMode);
         break;
 

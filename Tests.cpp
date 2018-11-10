@@ -30,9 +30,9 @@ void Juan(void)
 
 MenuOptionIntValue option1("Editable value", EditableValue);
 MenuOptionAction   option2("Test button", Pepe);
-MenuOptionSubmenu  option3("Next menú");
+//MenuOptionSubmenu  option3("Next menú");
 MenuOptionIntValue option4("Editable with limits", EditableValue2, 7, 10);
-#define SIZE_ARRAY 4
+#define SIZE_ARRAY 3
 
 void TestMenuOption()
 {
@@ -41,8 +41,8 @@ void TestMenuOption()
 
   Puntero[0] = &option1;
   Puntero[1] = &option2;
-  Puntero[2] = &option3;
-  Puntero[3] = &option4;
+  //Puntero[2] = &option3;
+  Puntero[2] = &option4;
   
   Serial.println(">>> MenuOption test start");
 
@@ -89,11 +89,21 @@ void TestMenuOption()
   Serial.println("MenuOption test end <<<");  
 }
 
+int Fingers = 10;
+int Toes = 10;
+MenuOptionIntValue SubElemento1("fingers", Fingers, 0, 10);
+MenuOptionIntValue SubElemento2("toes", Toes, 0, 10);
+
+MenuOption *SubMenu[] =
+{
+  &SubElemento1,
+  &SubElemento2
+};
 
 int Potatoes = 16;
 
 MenuOptionIntValue Elemento1("Potato chips", Potatoes);
-MenuOptionSubmenu  Elemento2("Unused menu");
+MenuOptionSubmenu  Elemento2("I am a submenu", SubMenu, 2);
 MenuOptionAction   Elemento3("Juan", Juan);
 #define BACKLIGHT_PIN 5
 int Backlight;
