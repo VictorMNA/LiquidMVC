@@ -218,8 +218,8 @@ void TestMenuControllerEncoder()
 #include "MenuRendererSerial.h"
 
 MenuRendererSerial RendererSerial;
-
-LiquidMVC MyMenu(RendererSerial, ControllerEncoder);
+//LiquidMVC MyMenu(RendererSerial, ControllerEncoder);
+LiquidMVC MyMenu(RendererLcd, ControllerEncoder);
 
 void TestLiquidMVCInit()
 {
@@ -236,7 +236,11 @@ void TestLiquidMVC()
 {
   Serial.println(">>> TestLiquidMVC test start");
 
+  pinMode(LCD_PIN_RW, OUTPUT);
+  digitalWrite(LCD_PIN_RW, LOW);
+
   MyMenu.Init();
+  Elemento4.setValueChangedCallback(ChangeBacklight);
   MyMenu.setMenuArray(ArrayMenu, 4);
   MyMenu.ExecMenu();
 
