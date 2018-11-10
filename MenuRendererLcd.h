@@ -10,12 +10,14 @@
 class MenuRendererLcd: public MenuRenderer
 {
   public:
-    MenuRendererLcd();
-    void Init(void) override;
+    MenuRendererLcd(LiquidCrystal &lcd_object, int cols, int rows);
+    void Init(void) override {};
     void Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing) override;
 
   private:
-    LiquidCrystal lcd;
+    LiquidCrystal &lcd;
+    int _cols;
+    int _rows;
 
     String GenerateSelectableElementString(MenuOption* element, bool selected, bool editing);
 };

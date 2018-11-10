@@ -9,21 +9,18 @@
 #include "MenuOption.h"
 #include "MenuRendererLcd.h"
 
-MenuRendererLcd::MenuRendererLcd():
-lcd(LCD_PIN_RS, LCD_PIN_RW, LCD_PIN_EN, LCD_PIN_D4, LCD_PIN_D5, LCD_PIN_D6, LCD_PIN_D7)
+MenuRendererLcd::MenuRendererLcd(LiquidCrystal &lcd_object, int cols, int rows):
+lcd(lcd_object),
+_cols(cols),
+_rows(rows)
 {
-}
-
-void MenuRendererLcd::Init()
-{
-  lcd.begin(LCD_COLS, LCD_ROWS);
-  lcd.clear();
-  analogWrite(LCD_BACKLIGHT_PIN, 200);
 }
 
 String MenuRendererLcd::GenerateSelectableElementString(MenuOption* element, bool selected, bool editing)
 {
   String Text;
+
+  // TODO: make string adaptable to cols of display
 
   if(selected && !editing)
   {
@@ -55,10 +52,9 @@ String MenuRendererLcd::GenerateSelectableElementString(MenuOption* element, boo
 
 void MenuRendererLcd::Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing)
 {
-  // TODO: make for variable display size
   lcd.clear();
 
-  if(LCD_ROWS > 2)
+  if(_rows > 2)
   {
     lcd.setCursor(0, 0);
     if(selected == 0)
@@ -71,7 +67,7 @@ void MenuRendererLcd::Render(const Vector<MenuOption*>& array, const int& select
     }
   }
 
-  lcd.setCursor(0, (LCD_ROWS <= 2)?0:1);
+  lcd.setCursor(0, (_rows <= 2)?0:1);
   if(selected == -1)
   {
     lcd.print(">Back");
@@ -82,7 +78,7 @@ void MenuRendererLcd::Render(const Vector<MenuOption*>& array, const int& select
   }
 
   int next = 1;
-  for(int row = (LCD_ROWS <= 2)?1:2; row < LCD_ROWS; row++, next++)
+  for(int row = (_rows <= 2)?1:2; row < _rows; row++, next++)
   {
     lcd.setCursor(0, row);
     if((selected + next) < array.size())

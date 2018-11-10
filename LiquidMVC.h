@@ -16,8 +16,6 @@
 
 #include <Vector.h>
 
-#include "LiquidMVC_config.h"
-
 #include "MenuOption.h"
 #include "MenuController.h"
 #include "MenuRenderer.h"
