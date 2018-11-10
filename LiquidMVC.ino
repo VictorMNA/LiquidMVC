@@ -12,30 +12,6 @@ void setup() {
   Serial.println("Program started...");
   Serial.println();
 
-  TestMenuOption();
-  
-  PrintNextTest();
-  
-  TestArrayOptions();
-
-  PrintNextTest();
-  
-  TestMenuRendererLcd();
-
-  PrintNextTest();
-  
-  TestMenuControllerEncoder();  
-
-  PrintNextTest();
-
-  TestLiquidMVCInit();
-
-  PrintNextTest();
-
-  TestValueChangedCallback();
-
-  PrintNextTest();
-
   TestLiquidMVC();
 
   Serial.println();

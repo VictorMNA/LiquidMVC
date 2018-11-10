@@ -12,8 +12,7 @@
 
 LiquidMVC::LiquidMVC(MenuRenderer& renderer, MenuController& controller):
 _renderer(renderer),
-_controller(controller),
-_optionSelected(0)
+_controller(controller)
 {
 };
 
@@ -46,18 +45,20 @@ void LiquidMVC::ListMenu()
   Serial.println("- End menu list");
 }
 
-void LiquidMVC::Render()
-{
-  _renderer.Render(_menuSystem, _optionSelected, _editMode);
-}
+
 void LiquidMVC::ExecMenu()
 {
+  NavigateMenu(_menuSystem);
+}
+
+void LiquidMVC::NavigateMenu(const Vector<MenuOption*>& array)
+{
   bool MenuRunning = true;
+  int OptionSelected = 0;
 
   _editMode = false;
-  _optionSelected = 0;
 
-  Render();
+  _renderer.Render(array, OptionSelected, _editMode);
 
   while(MenuRunning)
   {
@@ -65,52 +66,52 @@ void LiquidMVC::ExecMenu()
     {
       case MenuController::Event::SELECT:
         Serial.println("Controller returns Select");
-        if(_optionSelected == -1)
+        if(OptionSelected == -1)
         {
           MenuRunning = false;
         }
-        else if(_menuSystem[_optionSelected]->getType() == MenuOption::Type::ACTION)
+        else if(array[OptionSelected]->getType() == MenuOption::Type::ACTION)
         {
-          (static_cast<MenuOptionAction*>(_menuSystem[_optionSelected]))->ExecuteCallback();
+          (static_cast<MenuOptionAction*>(array[OptionSelected]))->ExecuteCallback();
         }
-        else if(_menuSystem[_optionSelected]->getType() == MenuOption::Type::INT_VALUE)
+        else if(array[OptionSelected]->getType() == MenuOption::Type::INT_VALUE)
         {
           _editMode = !_editMode;
         }
-        Render();
+        _renderer.Render(array, OptionSelected, _editMode);
         break;
 
       case MenuController::Event::PREV:
         if(_editMode)
         {
-          if(_menuSystem[_optionSelected]->getType() == MenuOption::Type::INT_VALUE)
+          if(array[OptionSelected]->getType() == MenuOption::Type::INT_VALUE)
           {
-            (static_cast<MenuOptionIntValue*>(_menuSystem[_optionSelected]))->PrevValue();
+            (static_cast<MenuOptionIntValue*>(array[OptionSelected]))->PrevValue();
           }
         }
         else
         {
-          if(_optionSelected >= 0)
+          if(OptionSelected >= 0)
           {
-            _optionSelected--;
+            OptionSelected--;
           }
         }
-        Render();
+        _renderer.Render(array, OptionSelected, _editMode);
         break;
 
       case MenuController::Event::NEXT:
         if(_editMode)
         {
-          (static_cast<MenuOptionIntValue*>(_menuSystem[_optionSelected]))->NextValue();
+          (static_cast<MenuOptionIntValue*>(array[OptionSelected]))->NextValue();
         }
         else
         {
-          if(_optionSelected < (((int)_menuSystem.size()) - 1))
+          if(OptionSelected < (((int)array.size()) - 1))
           {
-            _optionSelected++;
+            OptionSelected++;
           }
         }
-        Render();
+        _renderer.Render(array, OptionSelected, _editMode);
         break;
     }
   }

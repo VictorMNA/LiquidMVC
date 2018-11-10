@@ -97,11 +97,11 @@ MenuOptionSubmenu  Elemento2("Unused menu");
 MenuOptionAction   Elemento3("Juan", Juan);
 #define BACKLIGHT_PIN 5
 int Backlight;
-MenuOptionIntValue Elemento4("Backlight", Backlight, 0, 255);
+MenuOptionIntValue Elemento4("Backlight", Backlight, 0, 15);
 
 void ChangeBacklight(void)
 {
-  analogWrite(BACKLIGHT_PIN, Backlight);
+  analogWrite(BACKLIGHT_PIN, Backlight * 16);
 }
 
 MenuOption *ArrayMenu[] =
@@ -236,8 +236,8 @@ void TestLiquidMVC()
 {
   Serial.println(">>> TestLiquidMVC test start");
 
-  pinMode(LCD_PIN_RW, OUTPUT);
-  digitalWrite(LCD_PIN_RW, LOW);
+  Backlight = 15;
+  ChangeBacklight();
 
   MyMenu.Init();
   Elemento4.setValueChangedCallback(ChangeBacklight);

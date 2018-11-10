@@ -40,12 +40,11 @@ class LiquidMVC  {
 
   private:
     Vector<MenuOption*> _menuSystem;
-    int _optionSelected;
     bool _editMode;
     MenuRenderer& _renderer;
     MenuController& _controller;
 
-    void Render(void);
+    void NavigateMenu(const Vector<MenuOption*>& array);
 };
   
 #endif
