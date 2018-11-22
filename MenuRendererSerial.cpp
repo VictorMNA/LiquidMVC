@@ -11,35 +11,40 @@
 #include "MenuRendererSerial.h"
 
 
+MenuRendererSerial::MenuRendererSerial(Stream& stream):
+_serialStream(stream)
+{
+
+}
+
 void MenuRendererSerial::Init()
 {
-  Serial.end(); // the Serial can be previously configured
-  Serial.begin(115200);
-  Serial.println("MenuRendererSerial: Init called");
+
 }
 
 void MenuRendererSerial::PrintSelectableElement(String text, bool selected)
 {
     if(selected)
     {
-      Serial.print(">");
+      _serialStream.print(">");
     }
 
-    Serial.print(text);
+    _serialStream.print(text);
 
     if(selected)
     {
-      Serial.print("<");
+      _serialStream.print("<");
     } 
 }
 
 
 void MenuRendererSerial::Render(const Vector<MenuOption*>& array, const int& selected, const bool& editing)
 {
-  Serial.println("\fMenu:");
+  _serialStream.print("\033c"); // clear console
+  _serialStream.println("Menu:");
 
   PrintSelectableElement("Back", (selected == -1));
-  Serial.println();
+  _serialStream.println();
 
   for(int Index = 0; Index < array.size(); Index++)
   {
@@ -47,10 +52,10 @@ void MenuRendererSerial::Render(const Vector<MenuOption*>& array, const int& sel
 
     if(array[Index]->getType() == MenuOption::Type::INT_VALUE)
     {
-      Serial.print(": ");
+      _serialStream.print(": ");
       PrintSelectableElement(String((static_cast<MenuOptionIntValue*>(array[Index]))->getValue()), ((Index == selected) && editing));
     }
-    Serial.println();
+    _serialStream.println();
   }
 }
 
