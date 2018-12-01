@@ -53,14 +53,13 @@ void LiquidMVC::ExecMenu()
 
 void LiquidMVC::NavigateMenu(const Vector<MenuOption*>& array)
 {
-  bool MenuRunning = true;
   int OptionSelected = 0;
 
   _editMode = false;
 
   _renderer.Render(array, OptionSelected, _editMode);
 
-  while(MenuRunning)
+  while(true)
   {
     switch(_controller.Read())
     {
@@ -68,7 +67,7 @@ void LiquidMVC::NavigateMenu(const Vector<MenuOption*>& array)
         Serial.println("Controller returns Select");
         if(OptionSelected == -1)
         {
-          MenuRunning = false;
+          return;
         }
         else if(array[OptionSelected]->getType() == MenuOption::Type::ACTION)
         {
