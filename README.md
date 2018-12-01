@@ -3,7 +3,7 @@ Arduino Model View Controller based on LiquidMenu library with an Encoder for na
 
 
 
-Libraries needed:
+Libraries needed (depending uses):
 
 - LiquidCrystal and/or LiquidCrystal_I2C: Installables from Arduino IDE library manager.
 
@@ -13,3 +13,4 @@ Libraries needed:
   
 - Vector from Peter Polidoro: https://github.com/janelia-arduino/Vector
 
+- AduinoEasigng from tobiastoft:  https://github.com/tobiastoft/ArduinoEasing (http://www.tobiastoft.com/posts/a-simple-easing-library-for-arduino)
